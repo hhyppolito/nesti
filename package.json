@@ -1,0 +1,10 @@
+{
+  "name": "nesti",
+  "version": "0.1.0",
+  "private": true,
+  "description": "As finanças da família, num só lugar.",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "test": "node tests/account-reports.test.cjs && node tests/analytics.test.cjs && node tests/evolution.test.cjs"
+  }
+}

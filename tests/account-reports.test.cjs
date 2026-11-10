@@ -1,0 +1,14 @@
+const assert=require('node:assert/strict');
+const reports=require('../dist/account-reports.js');
+const accounts=[{id:'a',label:'ABANCA · household'},{id:'p',label:'ActivoBank · personal'},{id:'s',label:'ActivoBank · savings'}];
+const row=(id,date,amount,flow)=>({account_id:id,booked_on:date,amount,flow_kind:flow});
+const rows=[row('a','2026-10-01',1000,'income'),row('a','2026-10-02',-200,'expense'),row('a','2026-10-03',10,'refund'),row('p','2026-10-02',200,'transfer'),row('p','2026-10-03',-50,'expense'),row('s','2026-10-04',-100,'investment'),row('s','2026-11-09',-999,'expense')];
+const ab=reports.report(rows,accounts,'abanca','all','2026-11-08')[0];
+assert.deepEqual(ab,{month:'2026-10',received:101000,paid:20000,spending:19000,investing:0,transferOut:0,count:3});
+const active=reports.report(rows,accounts,'activo','all','2026-11-08')[0];
+assert.equal(active.count,3);assert.equal(active.spending,5000);assert.equal(active.investing,10000);
+const personal=reports.report(rows,accounts,'activo','p','2026-11-08')[0];assert.equal(personal.count,2);assert.equal(personal.investing,0);
+assert.deepEqual(reports.report(rows,accounts,'abanca','p','2026-11-08'),[]);
+const all=reports.report(rows,accounts,'all','all','2026-11-08')[0];for(const k of ['received','paid','spending','investing','transferOut','count'])assert.equal(all[k],ab[k]+active[k]);
+assert.equal(reports.report([],accounts,'abanca','all','2026-11-08').length,0);
+console.log('Bank isolation, Activo subaccounts, refunds, future dates and combined reconciliation passed.');
