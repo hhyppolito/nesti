@@ -10,6 +10,8 @@ Aplicação de gestão financeira familiar em HTML, CSS e JavaScript, com autent
 
 ## Funcionalidades
 
+- Saldos por conta com data do extrato, subtotal documentado e avisos de dados antigos ou divergentes; independentes do mês da análise.
+
 - Análise mensal, receitas versus despesas, categorias detalhadas e despesas fixas/variáveis.
 - Vistas por banco e conta, relatórios mensais e revisão dos movimentos.
 - Orçamentos globais e por categoria, metas de poupança e rendimentos previstos por período.

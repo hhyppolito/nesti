@@ -1,0 +1,15 @@
+const assert=require('node:assert/strict');
+const {balances}=require('../dist/account-reports.js');
+const accounts=[{id:'a',label:'ABANCA'},{id:'p',label:'Activo pessoal'},{id:'s',label:'Activo poupança'},{id:'empty',label:'Sem extrato'}];
+const row=(id,account,date,balance)=>({id,account_id:account,booked_on:date,statement_balance:balance});
+const rows=[row('a1','a','2026-11-09','200'),row('a2','a','2026-11-09','100'),row('future','a','2026-11-12','99999'),row('p1','p','2026-11-08',0),row('s1','s','2026-11-05','8000')];
+const links=[{transaction_id:'a1',source_id:'x',source_row:10},{transaction_id:'a2',source_id:'x',source_row:11}];
+let b=balances(rows,accounts,'abanca','all','2026-11-11',links);assert.equal(b.total,10000);assert.equal(b.points[0].date,'2026-11-09');assert(b.points[0].stale);
+b=balances([...rows].reverse(),accounts,'all','all','2026-11-11',links);assert.equal(b.total,810000);assert(b.partial);assert(b.mixedDates);assert.equal(b.points[1].value,0);assert.equal(b.points[3].value,null);
+b=balances(rows,accounts,'activo','p','2026-11-11',links);assert.equal(b.total,0);assert.equal(b.points.length,1);
+assert.equal(balances(rows,accounts,'abanca','p','2026-11-11',links).total,null);
+assert.equal(balances(rows,accounts,'abanca','all','2026-11-11').points[0].value,null);
+const conflicting=[...rows,row('overlap','a','2026-11-09',500)];assert.equal(balances(conflicting,accounts,'abanca','all','2026-11-11',[...links,{transaction_id:'overlap',source_id:'y',source_row:100}]).total,null);
+const consistent=[...rows,row('overlap','a','2026-11-09',100)];assert.equal(balances(consistent,accounts,'abanca','all','2026-11-11',[...links,{transaction_id:'overlap',source_id:'y',source_row:100}]).total,10000);
+b=balances([...rows,row('later','p','2026-11-10',null)],accounts,'activo','p','2026-11-11');assert(b.points[0].subsequent);
+console.log('Balances: bank isolation, source ordering, future exclusion, zero, missing, stale, subsequent movements and overlapping-source conflicts passed.');
