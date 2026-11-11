@@ -66,3 +66,26 @@ Extratos e avaliações continuam nas suas fontes e no Supabase. Um backup do Gi
 Novos documentos aguardam revisão antes de entrarem nos totais. Sincronização contínua do Drive, importação autónoma, renovação automática de lembretes e geração autónoma de análises por IA ainda não estão ligadas. A evolução patrimonial usa apenas os ativos financeiros documentados e não inclui automaticamente imóveis ou dívidas.
 
 A identidade usa verde profundo `#173D35`, areia `#E9E4D8` e verde suave `#C5DF9B`.
+
+## Fluxo de utilização
+
+1. Entrar com uma conta autorizada no agregado.
+2. Adicionar documentos ou movimentos e rever conta, período e origem.
+3. Confirmar classificações e separar transferências de receitas, despesas e aplicações.
+4. Consultar saldos, orçamentos e evolução, atendendo aos avisos de cobertura parcial ou avaliações antigas.
+5. Preservar as correções manuais e os documentos de origem ao atualizar os dados.
+
+## Desenvolvimento e verificação
+
+Ler [AGENTS.md](AGENTS.md) antes de alterar o projeto. Os modelos financeiros mantêm valores em cêntimos e distinguem bancos/contas. Não acrescentar dados reais aos exemplos ou testes.
+
+O comando `npm test`, definido em [package.json](package.json), executa três ficheiros: relatórios por conta, análise e evolução. A existência destes testes não substitui ensaios da interface, da autenticação ou das políticas de acesso. Para alterações, verificar também a sintaxe dos scripts e usar dados sintéticos.
+
+## Resolução de problemas
+
+- Sem ligação: confirmar que `dist/config.js` existe localmente e que a pasta é servida por HTTP.
+- Sem acesso ao agregado: confirmar email verificado, convite e associação administrativa; não alterar permissões para contornar a ausência de associação.
+- Valores diferentes da expectativa: rever período, conta, duplicações, cobertura e datas das avaliações antes de mudar fórmulas.
+- Recuperação: seguir [docs/OPERACAO.md](docs/OPERACAO.md); GitHub não contém os dados necessários para reconstruir sozinho a instalação.
+
+Este complemento documental foi conferido com os ficheiros do repositório em 11/11/2026. Não foram executados testes, migrações ou operações na base de dados nesta atualização.
