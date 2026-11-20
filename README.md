@@ -10,6 +10,8 @@ Aplicação de gestão financeira familiar em HTML, CSS e JavaScript, com autent
 
 ## Funcionalidades
 
+- Mercado: análise de talões por mês, loja, categoria e produto, com notas de crédito, saldo pré-pago e acesso privado aos documentos enviados. As compras não são somadas de novo ao extrato bancário.
+
 - Saldos por conta com data do extrato, subtotal documentado e avisos de dados antigos ou divergentes; independentes do mês da análise.
 
 - Análise mensal, receitas versus despesas, categorias detalhadas e despesas fixas/variáveis.

@@ -7,6 +7,6 @@
     "node": ">=22"
   },
   "scripts": {
-    "test": "node tests/account-reports.test.cjs && node tests/analytics.test.cjs && node tests/evolution.test.cjs && node tests/balances.test.cjs"
+    "test": "node tests/account-reports.test.cjs && node tests/analytics.test.cjs && node tests/evolution.test.cjs && node tests/balances.test.cjs && node tests/grocery.test.cjs"
   }
 }

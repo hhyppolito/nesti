@@ -40,3 +40,12 @@ Uma mudança no GitHub não publica por si só uma nova versão. Não configurar
 ## Recuperar e manter
 
 Guardar backups independentes da base de dados, dos ficheiros no Storage e dos originais do Drive. Este repositório não contém esses dados nem as credenciais para os recuperar. Validar a restauração num ambiente separado antes de alterar o domínio ou a instalação em uso.
+
+
+## Revisão dos envios e Mercado
+
+Os ficheiros enviados pela aplicação são suficientes para uma revisão: não é necessário duplicá-los no Drive. Os originais ficam no bucket privado; os envios só entram nos números após validação. A revisão deve verificar hash, identidade da conta, duplicados, datas e saldos, preservando as correções existentes.
+
+A tabela `finance_upload_reviews` é exclusiva do serviço: não possui permissões de cliente. Caso o conector não permita ler o Storage diretamente, uma operação temporária pode preparar os uploads explicitamente autorizados. Exigir JWT, uma capacidade aleatória temporária, prazo curto e lista fechada de agregado e uploads. A resposta HTTP só pode conter contagens; os ficheiros permanecem em preparação privada. Encerrar o serviço e limpar os payloads após a revisão. Nunca publicar capacidades ou código temporário com identificadores reais. Não existe importação automática ao enviar um ficheiro.
+
+Em Mercado, cada documento é identificado pela referência de origem e as cópias são unidas. As notas de crédito reduzem o consumo. Os preços exibidos já incluem os descontos informativos: não os subtrair novamente. O subtotal do talão é distinto do pagamento após usar saldo do cartão. Recargas de saldo pré-pago não são consumo. Talões incompletos não entram nos totais; talões com apenas total verificável entram no total, mas não no detalhe. Quantidades e unidades ausentes não devem ser inventadas para comparar preços. Atribuir uma conta bancária exige evidência própria.
