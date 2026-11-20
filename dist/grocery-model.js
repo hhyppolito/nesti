@@ -1,7 +1,7 @@
 'use strict';
 (function(root){
  const norm=s=>(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
- function group(category){const s=norm(category);if(/taras|deposito/.test(s))return 'Depósitos de embalagens';if(/petfood|animais/.test(s))return 'Animais';if(/higiene|limpeza|casa|cultura|servic|textil|bazar|brand marketing/.test(s))return 'Casa e outros artigos';return 'Alimentação e bebidas';}
+ function group(category){const s=norm(category);if(/taras|deposito/.test(s))return 'Depósitos de embalagens';if(/petfood|animais/.test(s))return 'Animais';if(/higiene|limpeza|casa|cultura|servic|textil|bazar|brand marketing/.test(s))return 'Casa e outros artigos';if(/mercearia|bens essenciais|soft drinks|bebidas|laticinios|charcutaria|congelados|frutas e legumes|frutos secos|padaria|peixaria|pequeno almoco|rest\.|cafetaria|talho|vinho/.test(s))return 'Alimentação e bebidas';return s==='outros'?'Por categorizar':'Casa e outros artigos';}
  const sign=r=>r.document_kind==='credit'?-1:1;
  const prepaid=r=>r.items.filter(i=>i.purpose==='prepaid').reduce((n,i)=>n+i.net_cents,0);
  const basket=r=>r.total_cents===null?null:r.total_cents-prepaid(r);
